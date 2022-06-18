@@ -1,0 +1,36 @@
+##5.1
+_MyIP="$( hostname -I | awk '{ print $1 }' )"
+if [ "A$_MyIP" == "A" ]
+then
+    _MyIPs="$( hostname -I )"
+    for _MyIP in "$_MyIPs"
+    do
+        echo "Found IP: \"$_MyIP\""
+    done
+else
+    echo "Found IP: $_MyIP"
+fi
+
+##5.2
+### WASN'T SURE ABOUT THIS
+#!/bin/bash
+FILENAME=/home/downloads/apache_logs
+FILESIZE=$(stat -c%s "$FILENAME")
+echo "Size of $FILENAME = $FILESIZE bytes."
+
+#5.3
+awk '{sum[$7 " " $9]++;tot++;} END { for (i in sum) { printf "%s %d\n", i, sum[i];} printf "TOTAL %d\n", tot;}' LOGFILES
+
+#5.4
+import requests
+from datetime import datetime
+def request_func(x,start,end):
+  file = open('apache_logs')
+  lines = file.readlines()
+  response = requests.head(x)
+  date_time = lines(date_time_str, '%d/%m/%y %H:%M:%S')
+  maximum = max(date_time)
+  minimum = min(date_time)
+  range = maximum - minimum
+  print(response.headers)
+  print(response.headers['content-length'])
