@@ -1,36 +1,53 @@
-##5.1
-_MyIP="$( hostname -I | awk '{ print $1 }' )"
-if [ "A$_MyIP" == "A" ]
-then
-    _MyIPs="$( hostname -I )"
-    for _MyIP in "$_MyIPs"
-    do
-        echo "Found IP: \"$_MyIP\""
-    done
-else
-    echo "Found IP: $_MyIP"
-fi
+#include <iostream>
 
-##5.2
-### WASN'T SURE ABOUT THIS
-#!/bin/bash
-FILENAME=/home/downloads/apache_logs
-FILESIZE=$(stat -c%s "$FILENAME")
-echo "Size of $FILENAME = $FILESIZE bytes."
+// Definition for a singly-linked list.
+struct ListNode {
+  int val;
+  ListNode *next;
+  ListNode(int x) : val(x), next(nullptr) {}
+};
 
-#5.3
-awk '{sum[$7 " " $9]++;tot++;} END { for (i in sum) { printf "%s %d\n", i, sum[i];} printf "TOTAL %d\n", tot;}' LOGFILES
+class LinkedList {
+ public:
+  ListNode* head;
+  LinkedList() : head(nullptr) {}
 
-#5.4
-import requests
-from datetime import datetime
-def request_func(x,start,end):
-  file = open('apache_logs')
-  lines = file.readlines()
-  response = requests.head(x)
-  date_time = lines(date_time_str, '%d/%m/%y %H:%M:%S')
-  maximum = max(date_time)
-  minimum = min(date_time)
-  range = maximum - minimum
-  print(response.headers)
-  print(response.headers['content-length'])
+  // Insert a new node at the front of the list.
+  void add_front(int x) {
+    ListNode* new_node = new ListNode(x);
+    new_node->next = head;
+    head = new_node;
+  }
+
+  // Insert a new node at the end of the list.
+  void add_end(int x) {
+    if (head == nullptr) {
+      head = new ListNode(x);
+      return;
+    }
+
+    ListNode* curr = head;
+    while (curr->next != nullptr) {
+      curr = curr->next;
+    }
+
+    curr->next = new ListNode(x);
+  }
+
+  // Remove the first node with the given value.
+  void remove(int x) {
+    ListNode* curr = head;
+    ListNode* prev = nullptr;
+    while (curr != nullptr && curr->val != x) {
+      prev = curr;
+      curr = curr->next;
+    }
+
+    if (curr == nullptr) {
+      // Value not found.
+      return;
+    }
+
+    if (prev == nullptr) {
+      // Value is in the head node.
+      head = curr->next
